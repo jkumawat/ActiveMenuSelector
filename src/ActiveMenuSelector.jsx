@@ -13,10 +13,20 @@ export default class ActiveMenuSelector extends Component {
         //add the active state back to the one that matches your target title
         const targetItem = menu.querySelector("a[title='" + menuItemTitle.value + "']");
         if (targetItem) {
-            //top nav menu requires the parent (li) to have the active class
-            targetItem.classList.add("active");
-            //left nav tree requires the (a) element to have the active class
+            
+            const listItemWithTargetAsChild = targetItem.closest("ul").closest("li.mx-navigationtree-has-items");
+						
+			if(listItemWithTargetAsChild){
+                // if the target item is at secondary level than, primary level li should expand.
+				listItemWithTargetAsChild.classList.remove("mx-navigationtree-collapsed");
+			}
+            
+            //top nav menu requires the parent (li) to have the active class            
             targetItem.parentNode.classList.add("active");
+            
+            //left nav tree requires the (a) element to have the active class
+            targetItem.classList.add("active");
+            
         } else {
             console.error(
                 "ActiveMenuSelector widget could not find target: " +
